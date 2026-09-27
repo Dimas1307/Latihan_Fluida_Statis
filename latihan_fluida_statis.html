@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Latihan Soal Fluida Statis</title>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root{--navy:#17324d;--blue:#2563eb;--pale:#eef5ff;--ink:#172033;--muted:#64748b;--line:#dbe3ee;--green:#16803c;--red:#b42318}
+*{box-sizing:border-box}body{margin:0;background:#f4f7fb;color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:linear-gradient(120deg,#17324d,#2563eb);color:white;padding:28px 18px}
+.wrap{max-width:900px;margin:auto;padding:0 16px}header h1{margin:0 0 6px;font-size:clamp(1.5rem,4vw,2.2rem)}header p{margin:0;opacity:.9}
+main{padding:22px 0 50px}.panel,.question{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 4px 16px #0f172a08}
+.formgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+label{display:block;font-weight:650;font-size:.92rem;margin-bottom:5px}input{width:100%;padding:11px 12px;border:1px solid #cbd5e1;border-radius:9px;font:inherit}
+.progressrow{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:.9rem;margin-bottom:8px}
+.progress{height:8px;background:#e2e8f0;border-radius:99px;overflow:hidden}.bar{height:100%;width:0;background:var(--blue);transition:width .2s}
+.qhead{display:flex;gap:10px;align-items:flex-start}.qnum{background:var(--pale);color:var(--blue);font-weight:800;border-radius:9px;padding:4px 10px;white-space:nowrap}.qtext{font-weight:650;margin:0 0 14px}
+.options{display:grid;gap:9px}.option{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer}.option:hover{background:#f8fbff;border-color:#9dbcf8}.option input{width:auto;margin-top:5px;accent-color:var(--blue)}.option:has(input:checked){background:var(--pale);border-color:var(--blue)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.btn{border:0;border-radius:10px;padding:11px 16px;font:inherit;font-weight:700;cursor:pointer}.primary{background:var(--blue);color:white}.secondary{background:#e8eef6;color:var(--navy)}.btn:disabled{opacity:.45;cursor:not-allowed}
+.result{display:none}.score{font-size:2rem;font-weight:850;color:var(--navy)}.review{border-top:1px solid var(--line);padding:14px 0}.correct{color:var(--green);font-weight:700}.wrong{color:var(--red);font-weight:700}.explain{color:#475569;margin:6px 0 0}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:10px 0 30px}
+@media(max-width:560px){.panel,.question{padding:15px}.actions .btn{flex:1}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1>Latihan Soal: Fluida Statis</h1><p>Instrumen Tes Pemahaman Konsep · 20 soal pilihan ganda</p></div></header>
+<main class="wrap">
+<section class="panel">
+  <h2 style="margin-top:0">Identitas Siswa</h2>
+  <div class="formgrid">
+    <div><label for="student">Nama lengkap</label><input id="student" placeholder="Masukkan nama"></div>
+    <div><label for="school">Asal sekolah</label><input id="school" placeholder="Masukkan sekolah"></div>
+    <div><label for="date">Hari/tanggal</label><input id="date" type="date"></div>
+  </div>
+  <p style="color:#64748b;margin-bottom:0">Pilih satu jawaban untuk setiap soal. Kerjakan perhitungan di kertas jika diperlukan, lalu tekan <b>Kumpulkan Jawaban</b>.</p>
+</section>
+<section class="panel">
+  <div class="progressrow"><span id="answered">0 dari 20 soal dijawab</span><span id="pct">0%</span></div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+</section>
+<form id="quiz"><div id="questions"></div>
+<div class="actions"><button type="button" class="btn secondary" id="reset">Ulangi dari Awal</button><button type="submit" class="btn primary">Kumpulkan Jawaban</button></div>
+</form>
+<section class="panel result" id="result" aria-live="polite">
+  <h2 style="margin-top:0">Hasil Latihan</h2><div id="studentResult"></div><div class="score" id="score"></div><p id="summary"></p><div id="review"></div>
+  <button class="btn primary" onclick="window.print()">Cetak Hasil</button>
+</section>
+</main>
+<footer>Latihan pembelajaran Fisika · Materi Fluida Statis</footer>
+<script>
+const questions = [
+{q:"Seorang mekanik menggunakan dongkrak hidrolik. Pada penampang kecil diberikan gaya 100 N. Luas penampang kecil 5 cm² dan luas penampang besar 100 cm². Berdasarkan Hukum Pascal, gaya pada penampang besar adalah …",o:["200 N","500 N","1.000 N","2.000 N","5.000 N"],a:3,e:"Hukum Pascal: F₁/A₁ = F₂/A₂. Maka F₂ = 100 × (100/5) = 2.000 N."},
+{q:"Ketika selembar tisu dicelupkan ke dalam air berwarna, air perlahan naik ke bagian tisu yang lebih tinggi. Peristiwa tersebut menunjukkan bahwa …",o:["Air memiliki massa jenis lebih kecil dari tisu","Gaya adhesi antara air dan serat tisu lebih besar daripada gaya kohesi antarmolekul air","Tekanan hidrostatis air bertambah seiring bertambahnya ketinggian","Gaya gravitasi bumi bekerja lebih kecil pada air di dalam tisu","Air bergerak karena perbedaan suhu"],a:1,e:"Air merambat pada serat tisu karena kapilaritas; adhesi antara air dan serat membantu air membasahi dan merambat."},
+{q:"Dua gelas ukur diisi air dan madu dengan volume sama, lalu dimiringkan bersamaan. Madu mengalir lebih lambat daripada air. Pernyataan paling tepat adalah …",o:["Madu memiliki koefisien viskositas lebih kecil","Tegangan permukaan madu menghambat aliran","Massa jenis madu lebih besar sehingga gravitasi bekerja lebih kecil","Madu memiliki viskositas lebih besar, sehingga laju alir lebih kecil","Air memiliki gaya tarik antarmolekul lebih besar"],a:3,e:"Viskositas menyatakan hambatan aliran. Cairan dengan viskositas lebih besar cenderung mengalir lebih lambat."},
+{q:"Perhatikan pernyataan: (1) tekanan dasar bergantung pada luas dasar bejana; (2) tekanan pada kedalaman sama dalam fluida homogen sama; (3) tekanan hidrostatis bergantung pada bentuk wadah; (4) tekanan hidrostatis meningkat dengan kedalaman. Pernyataan yang sesuai adalah …",o:["(1) dan (2)","(1) dan (3)","(2) dan (4)","(2), (3), dan (4)","(1), (2), dan (4)"],a:2,e:"Tekanan hidrostatis p = ρgh, sehingga bergantung pada massa jenis, gravitasi, dan kedalaman—bukan bentuk wadah atau luas dasar."},
+{q:"Alat yang secara langsung memanfaatkan prinsip Hukum Pascal ditunjukkan oleh: (1) kapal selam, (2) dongkrak hidrolik, (3) balon udara, (4) rem hidrolik mobil.",o:["(1) dan (2)","(1) dan (3)","(2) dan (4)","(3) dan (4)","Semua benar"],a:2,e:"Dongkrak hidrolik dan rem hidrolik meneruskan tekanan melalui fluida tertutup sesuai Hukum Pascal."},
+{q:"Peristiwa yang merupakan contoh penerapan Hukum Archimedes: (1) kapal laut dari baja mengapung; (2) tekanan dasar kolam lebih besar daripada di permukaan; (3) balok kayu terapung sebagian; (4) gaya fluida semakin besar jika luas wadah diperbesar.",o:["1 dan 2","1 dan 3","2 dan 3","3 dan 4","1, 2, dan 3"],a:1,e:"Kapal mengapung dan balok terapung melibatkan gaya apung. Pernyataan (2) tentang tekanan hidrostatis."},
+{q:"Benda akan melayang di dalam fluida ketika …",o:["ρ benda > ρ fluida, sehingga benda tenggelam","ρ benda = ρ fluida, sehingga berat benda sama dengan gaya apung","ρ benda < ρ fluida, sehingga benda terdorong ke permukaan","Volume benda > volume fluida","Massa benda > massa fluida"],a:1,e:"Dalam kondisi melayang, massa jenis benda sama dengan massa jenis fluida dan resultan gaya vertikal nol."},
+{q:"Kelompok fenomena yang paling tepat dikategorikan sebagai tegangan permukaan: (1) tetesan air di daun talas; (2) serangga berjalan di atas air; (3) air naik pada pembuluh sempit; (4) jarum terapung jika diletakkan perlahan; (5) air meresap ke kain.",o:["1, 2, dan 3","1, 2, dan 4","1, 3, dan 5","2, 3, dan 5","2, 4, dan 5"],a:1,e:"Tetesan cenderung membulat, serangga dapat ditopang permukaan, dan jarum dapat ditopang jika permukaan tidak pecah. (3) dan (5) terkait kapilaritas."},
+{q:"Tekanan hidrostatis pada suatu titik di dalam fluida diam disebabkan oleh …",o:["Berat fluida yang berada di atas titik tersebut","Gaya dorong dari dinding wadah","Tekanan atmosfer saja","Massa jenis fluida dan luas permukaan wadah","Bentuk dan ukuran wadah"],a:0,e:"Tekanan hidrostatis timbul akibat berat kolom fluida di atas titik yang ditinjau; besarnya p = ρgh."},
+{q:"Serangga berjalan di atas air, jarum dapat berada di permukaan air jika diletakkan hati-hati, dan air membentuk tetesan pada daun talas. Kesamaan ketiganya adalah …",o:["Air memberikan gaya apung besar pada setiap benda","Benda memiliki massa jenis lebih kecil daripada air","Permukaan air dapat menahan benda atau membentuk tetesan karena gaya tarik antarmolekul","Semua benda mengalami gaya ke atas","Molekul air di permukaan tidak mengalami gravitasi"],a:2,e:"Ketiga fenomena berkaitan dengan tegangan permukaan akibat gaya kohesi antarmolekul."},
+{q:"Tekanan hidrostatis di suatu titik dalam air adalah 30 kPa. Jika ρ air = 1.000 kg/m³ dan g = 10 m/s², kedalaman titik tersebut adalah …",o:["2 m","3 m","4 m","5 m","6 m"],a:1,e:"p = ρgh, sehingga h = p/(ρg) = 30.000/(1.000 × 10) = 3 m."},
+{q:"Sistem hidrolik memiliki piston kecil berdiameter 4 cm dan piston besar 8 cm. Jika gaya output 2.500 N, gaya input minimum adalah …",o:["500 N","625 N","750 N","1.000 N","1.250 N"],a:1,e:"Luas sebanding dengan kuadrat diameter. F₁ = F₂(d₁/d₂)² = 2.500(4/8)² = 625 N."},
+{q:"Klip kertas dijatuhkan perlahan pada dua cairan. Pada cairan A, klip bertahan di permukaan lebih lama daripada pada cairan B. Kesimpulan paling tepat adalah …",o:["Massa jenis cairan A lebih besar","Cairan A memiliki tegangan permukaan lebih besar","Gravitasi pada klip lebih kecil di cairan A","Cairan B tidak memiliki gaya tarik antarmolekul","Cairan A memiliki volume lebih besar"],a:1,e:"Dalam konteks percobaan ini, permukaan cairan A lebih mampu menopang klip, yang menunjukkan tegangan permukaan lebih besar."},
+{q:"Dua sistem hidrolik memiliki perbandingan luas piston kecil:besar masing-masing 1:20 dan 1:40. Jika gaya input sama, perbandingan gaya output sistem pertama terhadap kedua adalah …",o:["1:2","2:1","1:4","4:1","1:1"],a:0,e:"F output berbanding lurus dengan rasio luas piston. Perbandingan output = 20:40 = 1:2."},
+{q:"Air memiliki γ = 0,072 N/m, ρ = 1.000 kg/m³, θ = 0°. Alkohol memiliki γ = 0,022 N/m, ρ = 800 kg/m³, θ = 0°. Dalam pipa kapiler identik, pernyataan yang benar adalah …",o:["Air naik lebih tinggi karena tegangan permukaan lebih besar","Alkohol naik lebih tinggi karena massa jenis lebih kecil","Air naik lebih tinggi meskipun massa jenisnya lebih besar","Alkohol naik lebih tinggi karena tegangan permukaan lebih kecil","Keduanya naik sama tinggi karena sudut kontak sama"],a:0,e:"Ketinggian kapiler h = 2γ cosθ/(ρgr). Untuk pipa identik dan θ sama, γ/ρ air lebih besar daripada alkohol, sehingga air naik lebih tinggi."},
+{q:"Dua cairan X dan Y dituangkan dari botol yang sama pada kondisi dan suhu sama. Cairan X mengalir lebih lambat daripada Y. Pernyataan paling tepat adalah …",o:["Viskositas X lebih kecil","Viskositas X lebih besar","Massa jenis X lebih kecil","Tekanan hidrostatis X lebih besar","Perbedaan aliran hanya disebabkan bentuk botol"],a:1,e:"Pada kondisi yang sama, aliran lebih lambat menunjukkan hambatan aliran atau viskositas yang lebih besar."},
+{q:"Mengapa gaya yang relatif kecil pada pedal rem dapat menghentikan mobil bermassa besar? Prinsip fisika yang menjelaskannya adalah …",o:["Gaya input diperkecil oleh sistem hidrolik","Gaya input selalu lebih besar daripada output","Tekanan dari pedal diteruskan fluida rem ke segala arah dan bekerja pada piston lebih luas sehingga menghasilkan gaya besar","Gaya gesek roda tidak dipengaruhi sistem hidrolik","Energi kinetik sepenuhnya diubah menjadi panas oleh fluida rem"],a:2,e:"Sistem hidrolik meneruskan tekanan; piston dengan luas lebih besar menghasilkan gaya lebih besar."},
+{q:"Seseorang merasa lebih ringan ketika berdiri di dalam kolam renang karena …",o:["Massa tubuh berkurang","Gravitasi tidak bekerja di dalam air","Air memberikan gaya dorong ke atas sehingga mengurangi berat semu tubuh","Tekanan hidrostatis mendorong tubuh ke atas secara langsung","Gravitasi lebih kecil di dalam air"],a:2,e:"Gaya apung ke atas mengurangi gaya normal yang dirasakan, sehingga berat semu tubuh lebih kecil."},
+{q:"Dua kain berbeda dicelupkan ke air dengan panjang dan waktu pencelupan sama. Air pada kain A merambat lebih tinggi daripada kain B. Penjelasan paling tepat adalah …",o:["Massa jenis kain A lebih kecil","Gravitasi pada air di kain A lebih kecil","Celah serat kain A lebih sesuai untuk menghasilkan gaya kapiler","Kain A menghasilkan tekanan udara lebih besar","Air pada kain A bermassa lebih kecil"],a:2,e:"Ukuran dan struktur celah ant serat memengaruhi kapilaritas; celah yang sesuai dapat membuat air merambat lebih tinggi."},
+{q:"Oli mesin menjadi lebih kental ketika berada pada suhu rendah karena …",o:["Molekul oli mengalami pemuaian","Gaya tarik antarmolekul semakin lemah","Viskositas oli tidak dipengaruhi suhu","Koefisien viskositas oli meningkat saat suhu menurun","Oli menjadi lebih encer pada suhu rendah"],a:3,e:"Pada cairan seperti oli, penurunan suhu umumnya meningkatkan viskositas sehingga oli lebih sulit mengalir."}
+];
+const letters=["A","B","C","D","E"];
+const root=document.getElementById("questions");
+questions.forEach((item,i)=>{
+ const section=document.createElement("section");section.className="question";section.id="q"+i;
+ section.innerHTML=`<div class="qhead"><span class="qnum">Soal ${i+1}</span><p class="qtext">${item.q}</p></div><div class="options">${item.o.map((opt,j)=>`<label class="option"><input type="radio" name="q${i}" value="${j}"><span><b>${letters[j]}.</b> ${opt}</span></label>`).join("")}</div>`;
+ root.appendChild(section);
+});
+function updateProgress(){let n=questions.filter((_,i)=>document.querySelector(`input[name="q${i}"]:checked`)).length;document.getElementById("answered").textContent=`${n} dari ${questions.length} soal dijawab`;document.getElementById("pct").textContent=Math.round(n/questions.length*100)+"%";document.getElementById("bar").style.width=(n/questions.length*100)+"%";}
+document.getElementById("quiz").addEventListener("change",updateProgress);
+document.getElementById("quiz").addEventListener("submit",e=>{
+ e.preventDefault();
+ const name=document.getElementById("student").value.trim();
+ if(!name){alert("Silakan isi nama lengkap terlebih dahulu.");document.getElementById("student").focus();return;}
+ const unanswered=questions.filter((_,i)=>!document.querySelector(`input[name="q${i}"]:checked`)).length;
+ if(unanswered && !confirm(`Masih ada ${unanswered} soal yang belum dijawab. Tetap kumpulkan?`))return;
+ let score=0;const review=document.getElementById("review");review.innerHTML="";
+ questions.forEach((item,i)=>{
+  const selected=document.querySelector(`input[name="q${i}"]:checked`);
+  const val=selected?Number(selected.value):-1;const ok=val===item.a;if(ok)score++;
+  const div=document.createElement("div");div.className="review";
+  div.innerHTML=`<b>Soal ${i+1}</b> — ${selected?(ok?'<span class="correct">Benar</span>':'<span class="wrong">Belum tepat</span>'):'<span class="wrong">Tidak dijawab</span>'}<br>Jawaban benar: <b>${letters[item.a]}. ${item.o[item.a]}</b><p class="explain">${item.e}</p>`;
+  review.appendChild(div);
+ });
+ document.getElementById("studentResult").textContent=`Nama: ${name}${document.getElementById("school").value.trim()?" · Sekolah: "+document.getElementById("school").value.trim():""}${document.getElementById("date").value?" · Tanggal: "+document.getElementById("date").value:""}`;
+ document.getElementById("score").textContent=`Nilai: ${Math.round(score/questions.length*100)}`;
+ document.getElementById("summary").textContent=`Jawaban benar ${score} dari ${questions.length} soal.`;
+ document.getElementById("result").style.display="block";document.getElementById("result").scrollIntoView({behavior:"smooth"});
+ if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise();
+});
+document.getElementById("reset").addEventListener("click",()=>{if(confirm("Hapus semua jawaban dan mulai kembali?")){document.getElementById("quiz").reset();document.getElementById("result").style.display="none";updateProgress();window.scrollTo({top:0,behavior:"smooth"});}});
+document.getElementById("date").value=new Date().toLocaleDateString("en-CA");
+</script>
+</body>
+</html>
